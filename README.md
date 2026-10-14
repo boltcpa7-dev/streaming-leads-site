@@ -56,9 +56,11 @@ Sem o Supabase configurado, o layout pode ser explorado, mas o formulário não 
 ## Eventos da Meta
 
 No protótipo:
-- PageView: após aceitar cookies de marketing, se VITE_META_PIXEL_ID estiver definido.
+- PageView: após aceitar cookies de marketing, se a campanha ativa tiver um `meta_pixel_id` cadastrado em `campaign_partners`.
 - Lead: somente depois de a API confirmar o armazenamento e se cookies de marketing tiverem sido aceitos.
 - event_id: gerado pelo navegador e registrado no banco para viabilizar integração com CAPI mais tarde.
+- Notificações com números ilustrativos: aparecem inicialmente após alguns segundos e depois em intervalos aleatórios de 3 a 5 minutos, apenas como demonstração visual. Cada uma traz o aviso visível “SIMULAÇÃO · DADOS FICTÍCIOS”; não devem ser tratadas como prova social nem como números reais.
+- As notificações simuladas são ocultadas em viewports de altura muito baixa para evitar obstruir o formulário.
 
 Não há envio pela CAPI implementado. Antes de ativá-la, defina o evento e a base legal aplicável, respeite a preferência do titular, mantenha o token somente no servidor, use o mesmo event_id para deduplicar e valide os eventos no Gerenciador de Eventos. Não envie campos pessoais sensíveis.
 
@@ -80,4 +82,4 @@ Esta versão é servida por um processo Node/Express que também hospeda o build
 
 ## Conversão honesta
 
-A página não mostra pop-ups artificiais com números de pessoas que supostamente se cadastraram, contadores inventados ou falsas notificações de bônus. A confirmação exibida acontece apenas após o servidor salvar o lead. Se forem adicionadas estatísticas futuras, elas deverão vir de métricas reais, agregadas e revisadas para evitar divulgar dados pessoais.
+A página inclui pop-ups de demonstração com números fictícios, sempre identificados de forma visível como “SIMULAÇÃO · DADOS FICTÍCIOS”. Eles existem somente como animação do layout e não representam cadastros, resgates ou atividade real. A confirmação de envio do formulário só aparece após o servidor salvar o lead. Se forem adicionadas estatísticas reais no futuro, deverão vir de métricas verificadas, agregadas e revisadas para evitar divulgar dados pessoais.
