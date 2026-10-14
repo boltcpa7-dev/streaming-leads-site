@@ -404,7 +404,7 @@ export default function App() {
       {cookieLoaded && cookieChoice === "unknown" && (
         <div className="cookie-backdrop">
           <section className="cookie-panel" role="dialog" aria-modal="true" aria-labelledby="cookie-title">
-            <button className="cookie-close" aria-label="Fechar preferências" onClick={() => { setShowPreferences(false); if (window.localStorage.getItem("site_cookie_choice") !== "accepted" && window.localStorage.getItem("site_cookie_choice") !== "rejected") setCookieChoice("rejected"); }}><X size={18} /></button>
+            <button className="cookie-close" aria-label="Fechar preferências" onClick={() => { setShowPreferences(false); const stored = window.localStorage.getItem("site_cookie_choice"); if (stored === "accepted" || stored === "rejected") { setCookieChoice(stored); } else { window.localStorage.setItem("site_cookie_choice", "rejected"); setCookieChoice("rejected"); } }}><X size={18} /></button>
             <div className="cookie-icon"><LockKeyhole size={19} /></div>
             <h2 id="cookie-title">{showPreferences ? "Preferências de cookies" : "Você escolhe como usar cookies"}</h2>
             <p>Usamos armazenamento essencial para lembrar sua escolha. O Pixel da Meta, usado para mensuração de anúncios, só é carregado se você aceitar cookies de marketing. Você pode mudar de ideia depois.</p>
