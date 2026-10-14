@@ -10,7 +10,8 @@
     "dev": "concurrently -k -n WEB,API -c blue,green \"vite --host 0.0.0.0\" \"node --watch server/index.mjs\"",
     "build": "tsc --noEmit && vite build",
     "start": "node server/index.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.58.0",
