@@ -1,10 +1,10 @@
 # Streaming Leads Site
 
-Landing page responsiva para solicitações de contato, com API Node/Express, armazenamento privado no Supabase e Pixel da Meta condicionado à escolha de cookies de marketing.
+Landing page de tela única para solicitar bônus/consultar uma oferta, com API Node/Express, armazenamento privado no Supabase e Pixel da Meta condicionado à escolha de cookies de marketing. O layout é genérico, sem empresa fixa, e a campanha é selecionada por um identificador de parceiro autorizado.
 
 ## Status
 
-Protótipo inicial na branch feature/landing-page. A copy foi adaptada ao combo informado pelo responsável, que declarou possuir autorizações de distribuição/revenda. Registros dessas autorizações e comprovação das alegações comerciais devem ser mantidos antes da veiculação de anúncios. Não está pronto para campanhas ou produção até concluir as etapas abaixo. A identidade visual ainda usa o nome genérico provisório “Seu Combo”; substitua pelo nome real da empresa/marca antes de publicar. O repositório é público: não commite dados pessoais, tokens, chaves ou arquivos .env.
+Protótipo inicial na branch feature/landing-page. A copy foi adaptada ao combo informado pelo responsável, que declarou possuir autorizações de distribuição/revenda. Registros dessas autorizações e comprovação das alegações comerciais devem ser mantidos antes da veiculação de anúncios. Não está pronto para campanhas ou produção até concluir as etapas abaixo. A identidade visual usa um emblema genérico “Seu Bônus”, conforme a proposta de não fixar uma empresa. Configure o responsável legal e as condições da campanha nos documentos de cada operador antes de publicar. O repositório é público: não commite dados pessoais, tokens, chaves ou arquivos .env.
 
 ## Stack
 
@@ -12,7 +12,7 @@ Protótipo inicial na branch feature/landing-page. A copy foi adaptada ao combo 
 - Node.js + Express para receber e validar leads
 - Zod para validação do servidor
 - Supabase/Postgres como armazenamento
-- Pixel da Meta carregado somente após a escolha afirmativa para cookies de marketing
+- Perfil de campanha por slug (`?p=parceiro-exemplo`), com o Pixel carregado somente após a escolha afirmativa para cookies de marketing
 - UTM: utm_source, utm_medium, utm_campaign, utm_content e utm_term
 - Base preparada para armazenar event_id e possibilitar deduplicação futura; a API de Conversões (CAPI) ainda não envia eventos neste protótipo
 
@@ -30,7 +30,7 @@ Sem o Supabase configurado, o layout pode ser explorado, mas o formulário não 
 
 ## Variáveis de ambiente
 
-- VITE_META_PIXEL_ID: ID público do Pixel. Deixe vazio até configurar o Pixel correto e revisar o consentimento.
+- DEFAULT_PARTNER_SLUG: slug opcional usado quando o link não contém `?p=slug`; esse slug precisa existir e estar ativo na tabela `campaign_partners`.
 - SUPABASE_URL: URL do projeto Supabase (somente servidor).
 - SUPABASE_SERVICE_ROLE_KEY: chave privilegiada, somente servidor. Nunca incluir no frontend.
 - ALLOWED_ORIGINS: origens exatas permitidas, separadas por vírgula; inclua o domínio final ao publicar.
@@ -46,6 +46,13 @@ Sem o Supabase configurado, o layout pode ser explorado, mas o formulário não 
 - O rate limit em memória serve apenas como proteção inicial em uma instância Node. Use proteção de borda/serviço apropriado e CAPTCHA acessível se a operação exigir.
 - Defina política de acesso administrativo, rotina de backups, retenção e exclusão dos leads e canal para solicitações de titulares antes de uso real.
 
+## Vários parceiros/campanhas
+
+1. Execute/revise `supabase/schema.sql`.
+2. Para cada operador, insira um registro autorizado em `campaign_partners` com `slug` único, `meta_pixel_id` e `active=true`.
+3. Compartilhe o link da campanha com `?p=slug` (por exemplo, `https://SEU-DOMINIO/?p=parceiro-exemplo`). O Pixel é resolvido no servidor a partir do cadastro; não aceite `pixel_id` diretamente da URL.
+4. O lead fica associado ao `partner_id` resolvido no servidor. Esta versão inicial ainda não oferece login, painel de cada parceiro nem entrega automática de leads para cada operador. Esses recursos exigem uma etapa de autenticação e permissões por parceiro.
+
 ## Eventos da Meta
 
 No protótipo:
@@ -57,7 +64,7 @@ Não há envio pela CAPI implementado. Antes de ativá-la, defina o evento e a b
 
 ## Antes de publicar (obrigatório)
 
-- O responsável informou possuir autorizações comerciais. Antes de anunciar, manter registros dessas autorizações e comprovar as alegações de mais de 1.000 canais e mais de 300.000 conteúdos. A página usa nomes em texto, não logotipos, e inclui ressalva de disponibilidade/condições.
+- O responsável informou possuir autorizações comerciais. Manter os registros para cada campanha e comprovar as alegações de oferta/benefício antes de anunciar.
 - Substituir os textos provisórios de public/privacidade.html e public/termos.html, preencher identidade do controlador e revisar com responsável jurídico/privacidade.
 - Configurar e testar o aviso de cookies, recusa, alteração/revogação da preferência e comportamento do Pixel.
 - Configurar variáveis apenas no provedor de hospedagem, ALLOWED_ORIGINS e HTTPS.
@@ -69,3 +76,8 @@ Não há envio pela CAPI implementado. Antes de ativá-la, defina o evento e a b
 ## Hospedagem
 
 Esta versão é servida por um processo Node/Express que também hospeda o build do Vite. Use uma plataforma compatível com servidor Node persistente, configure as variáveis de ambiente e os comandos npm install, npm run build e npm start. Em ambientes com múltiplas instâncias, use rate limit compartilhado ou uma proteção de borda.
+
+
+## Conversão honesta
+
+A página não mostra pop-ups artificiais com números de pessoas que supostamente se cadastraram, contadores inventados ou falsas notificações de bônus. A confirmação exibida acontece apenas após o servidor salvar o lead. Se forem adicionadas estatísticas futuras, elas deverão vir de métricas reais, agregadas e revisadas para evitar divulgar dados pessoais.
