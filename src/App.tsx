@@ -214,7 +214,7 @@ export default function App() {
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Página inicial">
           <span className="brand-mark"><Play size={17} fill="currentColor" /></span>
-          <span>stream<span className="brand-accent">line</span></span>
+          <span>seu<span className="brand-accent">combo</span></span>
         </a>
         <nav className="desktop-nav" aria-label="Navegação principal">
           <a href="#vantagens">Como funciona</a>
