@@ -193,15 +193,15 @@ export default function App() {
   const faqs = [
     {
       question: "Como recebo as informações?",
-      answer: "Depois de enviar o formulário, nossa equipe poderá entrar em contato pelo canal informado para responder à sua solicitação. Enviar o formulário não obriga você a contratar."
+      answer: "Depois de enviar o formulário, nossa equipe poderá entrar em contato pelo canal informado para explicar o combo, valores e condições. Enviar o formulário não obriga você a contratar."
     },
     {
-      question: "O serviço funciona na minha TV ou celular?",
+      question: "O combo funciona na minha TV ou celular?",
       answer: "A compatibilidade depende do aplicativo, do sistema operacional e do dispositivo. Informe sua dúvida no formulário para receber orientações antes de contratar."
     },
     {
-      question: "Quais canais e conteúdos estão disponíveis?",
-      answer: "A disponibilidade de títulos, canais e recursos depende do plano, da região e dos direitos de distribuição aplicáveis. Confirme as condições atuais com o atendimento."
+      question: "O que está incluído no combo?",
+      answer: "A oferta informada reúne acesso a Netflix, HBO, Paramount+, mais de 1.000 canais ao vivo e mais de 300.000 conteúdos. A disponibilidade exata, os aplicativos incluídos, os dispositivos compatíveis e as condições dependem do plano contratado; confirme esses detalhes com o atendimento antes de pagar."
     },
     {
       question: "Meus dados serão usados para publicidade?",
@@ -228,9 +228,9 @@ export default function App() {
       <section className="hero section-shell" id="inicio">
         <div className="hero-copy">
           <div className="eyebrow"><Sparkles size={15} /> SUA PRÓXIMA EXPERIÊNCIA COMEÇA AQUI</div>
-          <h1>Entretenimento para acompanhar <span>do seu jeito.</span></h1>
+          <h1>Seu combo de entretenimento, <span>tudo em um só lugar.</span></h1>
           <p className="hero-description">
-            Conheça as opções disponíveis, tire suas dúvidas e descubra qual alternativa faz sentido para você — antes de contratar.
+            Conheça o combo com Netflix, HBO, Paramount+, mais de 1.000 canais ao vivo e mais de 300.000 conteúdos. Envie seus dados para consultar preço, disponibilidade, compatibilidade e condições antes de contratar.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#lead">Receber informações <ArrowRight size={18} /></a>
@@ -267,26 +267,26 @@ export default function App() {
       <section className="benefits section-shell" id="vantagens">
         <div className="section-heading">
           <div className="eyebrow">UMA ESCOLHA MAIS TRANQUILA</div>
-          <h2>Saiba o que está contratando.</h2>
-          <p>Receba orientações antes de decidir. O objetivo é encontrar uma opção compatível com suas necessidades e esclarecer as condições do serviço.</p>
+          <h2>Mais opções de entretenimento no seu dia a dia.</h2>
+          <p>Consulte o combo que reúne Netflix, HBO, Paramount+, canais ao vivo e um catálogo amplo. Confirme com a equipe os itens incluídos, valores e compatibilidade antes de contratar.</p>
         </div>
         <div className="benefit-grid">
           <article className="benefit-card">
             <div className="icon-box purple"><MonitorPlay size={23} /></div>
-            <h3>Entenda as opções</h3>
-            <p>Peça informações sobre planos, funcionamento e o que está incluído em cada alternativa.</p>
+            <h3>Um combo, várias opções</h3>
+            <p>Consulte as condições de acesso aos serviços de streaming e ao catálogo incluído no plano disponível.</p>
             <span className="card-number">01</span>
           </article>
           <article className="benefit-card">
             <div className="icon-box green"><Tv size={23} /></div>
-            <h3>Confira seus dispositivos</h3>
-            <p>Entenda a compatibilidade com sua TV, celular, computador ou outro dispositivo.</p>
+            <h3>Mais de 1.000 canais ao vivo*</h3>
+            <p>Consulte a grade, a disponibilidade regional e os dispositivos compatíveis antes de contratar.</p>
             <span className="card-number">02</span>
           </article>
           <article className="benefit-card">
             <div className="icon-box orange"><CircleHelp size={23} /></div>
-            <h3>Tire suas dúvidas</h3>
-            <p>Confirme a disponibilidade do catálogo, as condições comerciais e o suporte antes de contratar.</p>
+            <h3>Mais de 300.000 conteúdos*</h3>
+            <p>Consulte os conteúdos atualmente disponíveis e as condições de acesso com a equipe de atendimento.</p>
             <span className="card-number">03</span>
           </article>
         </div>
@@ -310,8 +310,8 @@ export default function App() {
       <section className="lead-section section-shell" id="lead">
         <div className="lead-copy">
           <div className="eyebrow"><span className="eyebrow-dot" /> FALE COM A NOSSA EQUIPE</div>
-          <h2>Vamos encontrar a opção certa para você?</h2>
-          <p>Deixe seus dados para receber informações e esclarecer suas dúvidas. O contato é sobre a solicitação que você fizer.</p>
+          <h2>Quer conhecer o combo completo?</h2>
+          <p>Deixe seus dados para consultar valores, funcionamento, disponibilidade dos serviços incluídos e condições da oferta. Nossa equipe responde à sua solicitação sem compromisso.</p>
           <div className="lead-note"><ShieldCheck size={20} /><span><strong>Transparência em primeiro lugar.</strong><br />Você pode solicitar informações sem compromisso e escolher separadamente se deseja receber novidades promocionais.</span></div>
           <div className="contact-points"><span><CheckCircle2 size={16} /> Atendimento sobre sua solicitação</span><span><CheckCircle2 size={16} /> Sem obrigação de contratar</span></div>
         </div>
@@ -394,7 +394,7 @@ export default function App() {
         <div className="footer-main section-shell">
           <div className="footer-brand">
             <a className="brand" href="#inicio"><span className="brand-mark"><Play size={17} fill="currentColor" /></span><span>stream<span className="brand-accent">line</span></span></a>
-            <p>Informação clara para uma escolha consciente.</p>
+            <p>Netflix, HBO, Paramount+ e mais opções de entretenimento. Consulte condições.</p>
           </div>
           <div className="footer-links"><a href="/privacidade.html">Aviso de Privacidade</a><a href="/termos.html">Termos de Uso</a><button type="button" onClick={() => { setShowPreferences(true); setCookieChoice("unknown"); }}>Preferências de cookies</button></div>
         </div>
