@@ -190,7 +190,7 @@ export default function App() {
 
         <div className="form-panel">
           {!submitted ? (
-            <form onSubmit={submitLead} noValidate>
+            <form onSubmit={submitLead}>
               <div className="form-fields">
                 <label className="input-shell">
                   <span>Seu nome</span>
