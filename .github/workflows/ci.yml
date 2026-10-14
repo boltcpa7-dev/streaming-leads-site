@@ -18,6 +18,8 @@ jobs:
           node-version: "22"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Smoke test API
+        run: npm test
       - name: Type check
         run: npm run typecheck
       - name: Build
