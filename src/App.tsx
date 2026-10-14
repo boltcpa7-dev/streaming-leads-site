@@ -29,16 +29,17 @@ type Attribution = {
   campaignTerm: string;
 };
 
+type MetaFbq = ((...args: any[]) => void) & {
+  callMethod?: (...args: any[]) => void;
+  queue: any[][];
+  loaded?: boolean;
+  version?: string;
+  push?: (...args: any[]) => void;
+};
+
 declare global {
   interface Window {
-    fbq?: {
-      (...args: any[]): void;
-      callMethod?: (...args: any[]) => void;
-      queue?: any[][];
-      loaded?: boolean;
-      version?: string;
-      push?: (...args: any[]) => void;
-    };
+    fbq?: MetaFbq;
   }
 }
 
@@ -66,13 +67,7 @@ function addMetaPixel(pixelId: string) {
     } else {
       fbq.queue.push(args);
     }
-  } as Window["fbq"] & {
-    callMethod?: (...args: any[]) => void;
-    queue: any[][];
-    loaded?: boolean;
-    version?: string;
-    push?: (...args: any[]) => void;
-  };
+  } as MetaFbq;
 
   fbq.queue = [];
   fbq.loaded = true;
@@ -138,13 +133,18 @@ export default function App() {
   }, [cookieChoice, cookieLoaded]);
 
   function chooseCookies(choice: Exclude<CookieChoice, "unknown">) {
+    const previousChoice = window.localStorage.getItem("site_cookie_choice");
     window.localStorage.setItem("site_cookie_choice", choice);
-    if (cookieChoice === "accepted" && choice === "rejected") {
+    setShowPreferences(false);
+
+    // If marketing consent is withdrawn, stop client-side tracking on a fresh page load.
+    if (previousChoice === "accepted" && choice === "rejected") {
+      document.cookie = "_fbp=; Max-Age=0; path=/; SameSite=Lax";
+      document.cookie = "_fbc=; Max-Age=0; path=/; SameSite=Lax";
       window.location.reload();
       return;
     }
     setCookieChoice(choice);
-    setShowPreferences(false);
   }
 
   function updateForm<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
@@ -404,7 +404,16 @@ export default function App() {
       {cookieLoaded && cookieChoice === "unknown" && (
         <div className="cookie-backdrop">
           <section className="cookie-panel" role="dialog" aria-modal="true" aria-labelledby="cookie-title">
-            <button className="cookie-close" aria-label="Fechar preferências" onClick={() => { setShowPreferences(false); const stored = window.localStorage.getItem("site_cookie_choice"); if (stored === "accepted" || stored === "rejected") { setCookieChoice(stored); } else { window.localStorage.setItem("site_cookie_choice", "rejected"); setCookieChoice("rejected"); } }}><X size={18} /></button>
+            <button className="cookie-close" aria-label="Fechar preferências" onClick={() => {
+              setShowPreferences(false);
+              const stored = window.localStorage.getItem("site_cookie_choice");
+              if (stored === "accepted" || stored === "rejected") {
+                setCookieChoice(stored);
+              } else {
+                window.localStorage.setItem("site_cookie_choice", "rejected");
+                setCookieChoice("rejected");
+              }
+            }}><X size={18} /></button>
             <div className="cookie-icon"><LockKeyhole size={19} /></div>
             <h2 id="cookie-title">{showPreferences ? "Preferências de cookies" : "Você escolhe como usar cookies"}</h2>
             <p>Usamos armazenamento essencial para lembrar sua escolha. O Pixel da Meta, usado para mensuração de anúncios, só é carregado se você aceitar cookies de marketing. Você pode mudar de ideia depois.</p>
