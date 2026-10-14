@@ -106,6 +106,44 @@ a { color: inherit; }
 .cookie-link { display: block; text-align: center; font-size: 10px; color: var(--accent); text-underline-offset: 3px; margin-top: 13px; }
 .settings-backdrop { z-index: 110; }
 
+.demo-toast {
+  position: fixed;
+  z-index: 30;
+  left: max(14px, env(safe-area-inset-left));
+  bottom: max(34px, calc(env(safe-area-inset-bottom) + 18px));
+  width: min(310px, calc(100vw - 28px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 30px 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(198,255,105,.3);
+  background: rgba(21,22,32,.97);
+  box-shadow: 0 12px 42px rgba(0,0,0,.42), 0 0 25px rgba(198,255,105,.05);
+  backdrop-filter: blur(16px);
+  animation: demo-toast-in .42s cubic-bezier(.2,.9,.25,1.2) both;
+}
+.demo-toast-icon {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  display: grid;
+  place-items: center;
+  color: #14170f;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ddffa7, #b7f451);
+}
+.demo-toast-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.demo-toast-label { color: var(--accent); font-size: 7px; font-weight: 800; letter-spacing: .85px; line-height: 1.2; }
+.demo-toast-copy strong { display: block; color: #f4f4f7; font-size: 10px; line-height: 1.3; font-weight: 700; }
+.demo-toast-number { color: var(--accent); font: 800 13px "Manrope", sans-serif; }
+.demo-toast-copy small { color: #a4a6b6; font-size: 8px; line-height: 1.35; }
+.demo-toast-close { position: absolute; top: 7px; right: 7px; padding: 3px; border: 0; color: #8f91a1; background: transparent; cursor: pointer; }
+@keyframes demo-toast-in {
+  from { opacity: 0; transform: translate(-14px, 12px) scale(.97); }
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+
 @media (min-width: 800px) {
   .conversion-content { width: min(100%, 440px); }
   .form-panel { padding: 20px 23px; }
@@ -132,6 +170,7 @@ a { color: inherit; }
   .safe-note { font-size: 8px; }
 }
 @media (max-height: 610px) {
+  .demo-toast { display: none; }
   .email-field { display: none; }
   .optional-consent { display: none; }
   .bonus-brand { gap: 2px; }
@@ -141,6 +180,7 @@ a { color: inherit; }
   .mini-footer { min-height: 15px; }
 }
 @media (max-width: 420px) {
+  .demo-toast { left: 10px; bottom: max(25px, env(safe-area-inset-bottom)); width: min(280px, calc(100vw - 20px)); }
   .single-screen { padding-left: 13px; padding-right: 13px; }
   .form-panel { border-radius: 15px; padding: 13px; }
   .hero-copy h1 { font-size: clamp(24px, 6.7vw, 30px); letter-spacing: -1px; }
