@@ -4,7 +4,7 @@ Landing page responsiva para solicitações de contato, com API Node/Express, ar
 
 ## Status
 
-Protótipo inicial na branch feature/landing-page. Não está pronto para campanhas ou produção até concluir as etapas de configuração abaixo. O repositório é público: não commite dados pessoais, tokens, chaves ou arquivos .env.
+Protótipo inicial na branch feature/landing-page. A copy foi adaptada ao combo informado pelo responsável, que declarou possuir autorizações de distribuição/revenda. Registros dessas autorizações e comprovação das alegações comerciais devem ser mantidos antes da veiculação de anúncios. Não está pronto para campanhas ou produção até concluir as etapas abaixo. A identidade visual ainda usa o nome genérico provisório “Seu Combo”; substitua pelo nome real da empresa/marca antes de publicar. O repositório é público: não commite dados pessoais, tokens, chaves ou arquivos .env.
 
 ## Stack
 
@@ -57,7 +57,7 @@ Não há envio pela CAPI implementado. Antes de ativá-la, defina o evento e a b
 
 ## Antes de publicar (obrigatório)
 
-- Confirmar autorizações de distribuição/revenda de cada conteúdo, canal e marca citados. Esta versão não usa logotipos nem afirma números de catálogo.
+- O responsável informou possuir autorizações comerciais. Antes de anunciar, manter registros dessas autorizações e comprovar as alegações de mais de 1.000 canais e mais de 300.000 conteúdos. A página usa nomes em texto, não logotipos, e inclui ressalva de disponibilidade/condições.
 - Substituir os textos provisórios de public/privacidade.html e public/termos.html, preencher identidade do controlador e revisar com responsável jurídico/privacidade.
 - Configurar e testar o aviso de cookies, recusa, alteração/revogação da preferência e comportamento do Pixel.
 - Configurar variáveis apenas no provedor de hospedagem, ALLOWED_ORIGINS e HTTPS.
