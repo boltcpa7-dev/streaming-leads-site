@@ -47,7 +47,14 @@ function captureUtm() {
   };
 }
 
+const demoNotices = [
+  { number: "12", title: "Cadastros de exemplo", detail: "Número ilustrativo para demonstrar a animação." },
+  { number: "08", title: "Solicitações de exemplo", detail: "Notificação fictícia; não representa atividade real." },
+  { number: "21", title: "Bônus ilustrativos", detail: "Exemplo visual, sem dados de clientes." }
+];
+
 export default function App() {
+  const [demoToastIndex, setDemoToastIndex] = useState<number | null>(null);
   const [cookieChoice, setCookieChoice] = useState<CookieChoice>("unknown");
   const [cookieLoaded, setCookieLoaded] = useState(false);
   const [config, setConfig] = useState<CampaignConfig | null>(null);
@@ -74,6 +81,32 @@ export default function App() {
       .catch(() => setConfig({ active: false }))
       .finally(() => setConfigLoaded(true));
   }, []);
+
+  useEffect(() => {
+    if (!cookieLoaded || cookieChoice === "unknown" || submitted) {
+      setDemoToastIndex(null);
+      return;
+    }
+    let timer: number | undefined;
+    let hideTimer: number | undefined;
+    let first = true;
+    const schedule = () => {
+      const delay = first
+        ? 9000 + Math.floor(Math.random() * 6000)
+        : 180000 + Math.floor(Math.random() * 120001);
+      first = false;
+      timer = window.setTimeout(() => {
+        setDemoToastIndex(Math.floor(Math.random() * demoNotices.length));
+        hideTimer = window.setTimeout(() => setDemoToastIndex(null), 5200);
+        schedule();
+      }, delay);
+    };
+    schedule();
+    return () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      if (hideTimer !== undefined) window.clearTimeout(hideTimer);
+    };
+  }, [cookieLoaded, cookieChoice, submitted]);
 
   useEffect(() => {
     if (!cookieLoaded || !configLoaded || cookieChoice !== "accepted" || !config?.active || !config.pixelId) return;
@@ -208,6 +241,18 @@ export default function App() {
         <span>Oferta sujeita a condições.</span><span className="footer-divider">·</span>
         <a href="/termos.html">Termos</a><span className="footer-divider">·</span><a href="/privacidade.html">Privacidade</a>
       </footer>
+
+      {demoToastIndex !== null && cookieChoice !== "unknown" && !submitted && (
+        <aside className="demo-toast" role="status" aria-live="polite">
+          <div className="demo-toast-icon"><Sparkles size={17} /></div>
+          <div className="demo-toast-copy">
+            <span className="demo-toast-label">SIMULAÇÃO · DADOS FICTÍCIOS</span>
+            <strong><span className="demo-toast-number">{demoNotices[demoToastIndex].number}</span> {demoNotices[demoToastIndex].title}</strong>
+            <small>{demoNotices[demoToastIndex].detail}</small>
+          </div>
+          <button type="button" className="demo-toast-close" aria-label="Fechar notificação demonstrativa" onClick={() => setDemoToastIndex(null)}><X size={14} /></button>
+        </aside>
+      )}
 
       {cookieLoaded && cookieChoice === "unknown" && (
         <div className="cookie-backdrop">
